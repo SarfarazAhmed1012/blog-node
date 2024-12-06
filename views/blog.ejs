@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head') %>
+    <title><%= blog.title %></title>
+    <style>
+      .blog-details img {
+        border-radius: 10px;
+        max-width: 100%;
+        height: auto;
+      }
+      .created-by-section {
+        display: flex;
+        align-items: center;
+        margin-top: 20px;
+      }
+      .created-by-section img {
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+      .created-by-info {
+        font-size: 0.9em;
+        color: #666;
+      }
+      .comments-section {
+        margin-top: 40px;
+      }
+      .comment {
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('./partials/nav') %>
+    <div class="container mt-5">
+      <div class="blog-details">
+        <h1 class="display-4 mb-3"><%= blog.title %></h1>
+        <img
+          src="<%= blog.coverImage %>"
+          alt="Blog Cover Image"
+          class="img-fluid mb-4"
+        />
+        <p class="lead"><%= blog.body %></p>
+      </div>
+
+      <!-- Created By Section -->
+      <div class="created-by-section">
+        <img
+          src="<%= blog.createdBy.profileImage %>"
+          alt="Author Image"
+          width="50px"
+        />
+        <div>
+          <p class="mb-0">
+            <strong>Created by:</strong> <%= blog.createdBy.fullName %>
+          </p>
+          <p class="created-by-info">
+            Published on: <%= new Date(blog.createdAt).toLocaleDateString() %>
+          </p>
+        </div>
+      </div>
+
+      <!-- Comments Section -->
+      <div class="comments-section">
+        <h3>Comments</h3>
+
+        <!-- List existing comments -->
+        <% blog.comments?.forEach(comment => { %>
+        <div class="comment">
+          <strong><%= comment.createdBy %>:</strong>
+          <p><%= comment.content %></p>
+          <small><%= new Date(comment.createdAt).toLocaleString() %></small>
+        </div>
+        <% }) %>
+
+        <!-- Comment Form -->
+        <form action="/comment/<%= blog._id %>/comment" method="POST">
+          <div class="mb-3">
+            <label for="text" class="form-label">Comment</label>
+            <textarea
+              id="text"
+              name="content"
+              class="form-control"
+              rows="4"
+              required
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Post Comment</button>
+        </form>
+      </div>
+    </div>
+    <%- include('./partials/scripts') %>
+  </body>
+</html>
