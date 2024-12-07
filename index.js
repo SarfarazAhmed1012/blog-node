@@ -42,3 +42,48 @@ app.use("/blog", blogRoute)
 app.use("/comment", commentRoute)
 
 app.listen(PORT, () => console.log(`Server is running on port: ${PORT}`))
+
+
+// sockets section start from here
+// const http = require("http");
+// const express = require("express");
+// const path = require("path");
+// const { Server } = require("socket.io");
+
+// const app = express();
+// const server = http.createServer(app);
+// const io = new Server(server)
+
+// app.use(express.static(path.resolve("./public")))
+
+// app.get("/", (req, res) => {
+//     return res.sendFile("./public/index.html")
+// })
+
+// // Handle WebSocket connections
+// io.on("connection", (socket) => {
+//     console.log("A user connected");
+
+//     // Listen for messages from clients
+//     socket.on("message", (data) => {
+//         console.log("Message received:", data, socket.id);
+//         // Broadcast message to all clients, including the sender
+//         io.emit("server-message", { message: data, sender: socket.id });
+//     });
+
+//     // Handle typing event
+//     socket.on("typing", (data) => {
+//         socket.broadcast.emit("typing", data); // Notify other clients
+//     });
+
+//     // Handle stop typing event
+//     socket.on("stop-typing", (data) => {
+//         socket.broadcast.emit("stop-typing", data); // Notify other clients
+//     });
+
+//     // Handle disconnections
+//     socket.on("disconnect", () => {
+//         console.log("A user disconnected");
+//     });
+// });
+// server.listen(8000, () => console.log(`Server is running at 8000`))
